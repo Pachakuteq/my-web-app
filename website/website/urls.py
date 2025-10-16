@@ -20,5 +20,8 @@ from resume import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello/', views.hello_world, name='hello_world'),
+    path('home/', views.home, name='home'),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
+    path('experience/', views.experience, name='experience'),
 ]
