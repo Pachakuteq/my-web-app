@@ -2,34 +2,27 @@
 {% block content %}
 <div class="container">  
     <div class="header-grid">
-        <div class="header-block">
-            <h1>Jose David</h1>
-        </div>
-        <div class="header-block">
-            <h1>About Me</h1>
-            <p>This is the about page of my personal website.</p>
-        </div>
+         <h1>Jose David</h1>
+         <h1>Regalado Alvarado</h1>
+         <h3>Full Stack Developer</h3>
     </div>
     
+    <div class="content-section">
+        <ul>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'experience' %}">Experience</a></li>
+        </ul>
+    </div> 
     
-    <h1>Projects</h1>
-    <div class="project-grid">
-        <div class="project-card">
-            <h3>Personal Blog</h3>
-            <p>A blog where I share my thoughts on technology and programming.</p>
-        </div>
-        <div class="project-card">
-            <h3>Portfolio Website</h3>
-            <p>A website showcasing my projects and skills.</p>
-        </div>
-        <div class="project-card">
-            <h3>E-commerce Site</h3>
-            <p>An online store built with Django and React.</p>
-        </div>
-    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     
     <div class="technologies-footer">
-        <h1>Technologies</h1>
+        <h2>Tech Skills</h2>
         <ul class="technologies-list">
             <li><i class="devicon-python-plain colored"></i></li>
             <li><i class="devicon-django-plain colored"></i></li>
