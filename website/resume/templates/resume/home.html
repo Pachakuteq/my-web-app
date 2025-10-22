@@ -2,37 +2,19 @@
 {% block content %}
 <div class="container">  
     <div class="header-grid">
-         <h1>Jose David</h1>
-         <h1>Regalado Alvarado</h1>
-         <h3>Full Stack Developer</h3>
+        <h1 class="swift-up-text">Jose David Regalado Alvarado</h1>
+        <div class="title-container">
+            <h2 class="main-title">Full Stack Developer</h2>
+        </div>
     </div>
     
     <div class="content-section">
         <ul>
             <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="{% url 'experience' %}">Experience</a></li>
+            <li><a href="{% url 'resume' %}">Resume</a></li>
         </ul>
     </div> 
+
     
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    
-    <div class="technologies-footer">
-        <h2>Tech Skills</h2>
-        <ul class="technologies-list">
-            <li><i class="devicon-python-plain colored"></i></li>
-            <li><i class="devicon-django-plain colored"></i></li>
-            <li><i class="devicon-html5-plain colored"></i></li>
-            <li><i class="devicon-css3-plain colored"></i></li>
-            <li><i class="devicon-javascript-plain colored"></i></li>
-            <li><i class="devicon-react-original colored"></i></li>
-            <li><i class="devicon-nodejs-plain colored"></i></li>
-            <li><i class="devicon-postgresql-plain colored"></i></li>
-        </ul>
-    </div>
 </div>
 {% endblock %}

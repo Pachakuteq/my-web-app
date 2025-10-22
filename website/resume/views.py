@@ -13,7 +13,7 @@ def contact(request):
     return render(request, 'resume/contact.html')
 
 def experience(request):
-    return render(request, 'resume/experience.html')
+    return render(request, 'resume/resume.html')
 
 
 
