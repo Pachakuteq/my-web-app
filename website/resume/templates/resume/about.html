@@ -1,129 +1,86 @@
 {% extends 'resume/base.html' %}
+{% load static %}
 {% block content %}
 <div class="container about-page">  
     <div class="text-zone1">
-        <h1>About Me</h1>
+        <h1>ABOUT ME</h1>
         <p>
-            Hello! I'm [Your Name], a passionate web developer with a love for creating beautiful and functional websites. With a background in [Your Background], I bring a unique perspective to my work.
+            Hello! I'm Jose David, an IT Support Specialist and aspiring Backend Developer with over 3 years of experience troubleshooting systems, improving reliability, and optimizing IT operations. My journey in IT has given me a strong understanding of how technology connects infrastructure, users, and processes — a perspective I now bring into backend development.
         </p>
         <p>
-            My journey into web development started [Your Journey]. Since then, I've honed my skills in various technologies including HTML, CSS, JavaScript, and Python. I enjoy tackling complex problems and turning ideas into reality through code.
+           I have a solid foundation in programming and scripting, which allows me to automate tasks, streamline workflows, and create integrations that make systems more efficient. I’m particularly interested in backend technologies that focus on performance, scalability, and security, and I enjoy solving technical challenges that push me to think logically and creatively.
         </p>
         <p>
-            When I'm not coding, you can find me [Your Hobbies or Interests]. I believe in continuous learning and am always looking for new challenges to grow both personally and professionally.
-        </p>
-        <p>
-            Thank you for visiting my website! Feel free to explore my projects and get in touch if you'd like to collaborate.
+            Working across different platforms and environments has taught me adaptability and problem-solving under pressure. I’m always exploring new frameworks, tools, and concepts in server management, networks, and cybersecurity, continuously improving my skills to build reliable, well-structured backend solutions.
         </p>
     </div>
+
+    <br>
+    <br>
+    <br>
+    
     <div class="text-zone2">
-        <h2>My History with Computer Sciences</h2>
+        <h1>FROM BROKEN MACHINE TO LINE OF CODE</h1>
         <p>
-            My fascination with computer sciences began at a young age when I first encountered a computer. The ability to create and manipulate digital environments captivated me, leading me to pursue formal education in the field.
+            Ever since I was a kid, I’ve been captivated by how things work. I would spend hours taking apart gadgets, repairing mechanical devices, and even building small contraptions just to see them function. My fascination started with physics and science, but it soon extended to computers, where I discovered how software could breathe life into technology and create entirely new possibilities.
         </p>
         <p>
-            Over the years, I've delved into various aspects of computer science, from algorithms and data structures to software development and web technologies. Each experience has deepened my understanding and fueled my passion for innovation.
+            As I grew, I found myself setting up and fixing computers for family and friends. These experiences taught me not just the mechanics of devices, but also the patience and problem-solving skills needed to troubleshoot and improve systems. Over time, my curiosity naturally led me toward software development and cybersecurity, areas where logic, creativity, and strategy intersect to solve real-world problems.
         </p>
         <p>
-            I've had the opportunity to work on diverse projects, ranging from small personal websites to larger applications. These experiences have taught me the importance of collaboration, problem-solving, and staying up-to-date with the latest industry trends.
+            What excites me most is the intersection of hardware and software — understanding how things work from the inside out, and using that knowledge to build smarter, more reliable solutions. Even as I dive deeper into backend development, I still carry my love for mechanical systems, dreaming of one day blending both worlds into projects that are practical, innovative, and well-engineered.
         </p>
         <p>
-            Looking ahead, I am excited to continue my journey in computer sciences, exploring new technologies and contributing to impactful projects that make a difference.
-        </p>
-    </div>
-    <div class="text-zone3">
-        <h1>What Drives Me</h1>
-        <p>
-            What drives me is a deep-seated curiosity and a desire to create meaningful solutions through technology. I am motivated by the challenge of solving complex problems and the satisfaction that comes from seeing my ideas come to life.    
-        </p>
-        <p>
-            I am passionate about continuous learning and growth, always seeking to expand my knowledge and skills in the ever-evolving field of web development. The opportunity to collaborate with like-minded individuals and contribute to innovative projects fuels my enthusiasm.
-        </p>
-        <p>
-            Ultimately, what drives me is the belief that technology has the power to transform lives and make a positive impact on the world. I am committed to using my skills to create solutions that not only meet user needs but also inspire and empower others.
+            Driven by curiosity and a love of learning, I continue to explore, experiment, and challenge myself — always seeking ways to turn ideas into tangible, intelligent systems that make a difference.
         </p>
     </div>
     <div class="more-about-heading">
-        <h1>More About Me</h1>
+        <h1> MORE </h1>
     </div>
-    <div class="text-zone4">
-        <div class="hobbies card-carousel">
-            <h1>Hobbies</h1>
-            <button class="carousel-arrow left" onclick="moveCarousel('hobbies', -1)">←</button>
-            <div class="carousel-container">
-                <div class="carousel-track" id="hobbies-track">
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/reading.jpg' %}" alt="Reading">
-                        <p>Reading Science Fiction Novels</p>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/hiking.jpg' %}" alt="Hiking">
-                        <p>Hiking and Exploring Nature Trails</p>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/guitar.jpg' %}" alt="Guitar">
-                        <p>Playing the Guitar</p>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/cooking.jpg' %}" alt="Cooking">
-                        <p>Cooking New Recipes</p>
-                    </div>
+    <div class="more-section">
+
+        <h2 class="line-title">Hobbies</h2>
+
+        <div class="owl-carousel custom-carousel owl-theme">
+
+            <div class="item active" style="background-image: url('{% static 'resume/images/reading.jpg' %}');">
+                 <div class="item-desc">
+                     <h3>Reading</h3>
+                     <p>Gained diverse cultural perspectives through immersive experience hghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh hhhhhhhhhhhhhhhhhh hhhhhhhhhhhh</p>
+                 </div>
+            </div>
+            
+            <div class="item" style="background-image: url('{% static 'resume/images/reading.jpg' %}');">
+                <div class="item-desc">
+                    <h3>Hiking</h3>
+                    <p>Hiking and Exploring Nature Trails</p>
                 </div>
             </div>
-            <button class="carousel-arrow right" onclick="moveCarousel('hobbies', 1)">→</button>
-        </div>
-    
-        <div class="wordly-experience card-carousel">
-            <h1>Worldly Experience</h1>
-            <button class="carousel-arrow left" onclick="moveCarousel('experience', -1)">←</button>
-            <div class="carousel-container">
-                <div class="carousel-track" id="experience-track">
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/study-abroad.jpg' %}" alt="Study Abroad">
-                        <p>Studied Abroad, Immersing in a New Culture</p>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/volunteer.jpg' %}" alt="Volunteer">
-                        <p>Volunteered, Contributing to Community Development</p>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/conference.jpg' %}" alt="Conference">
-                        <p>Attended International Tech Conferences</p>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/hackathon.jpg' %}" alt="Hackathon">
-                        <p>Participated in Hackathons</p>
-                    </div>
+
+            <div class="item" style="background-image: url('{% static 'resume/images/reading.jpg' %}');">
+                <div class="item-desc">
+                    <h3>Guitar</h3>
+                    <p>Playing the Guitar</p>
                 </div>
             </div>
-            <button class="carousel-arrow right" onclick="moveCarousel('experience', 1)">→</button>
-        </div>
-    
-        <div class="beyond-code card-carousel">
-            <h1>Beyond Code</h1>
-            <button class="carousel-arrow left" onclick="moveCarousel('beyond', -1)">←</button>
-            <div class="carousel-container">
-                <div class="carousel-track" id="beyond-track">
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/environment.jpg' %}" alt="Environment">
-                        <p>Environmental Conservation and Sustainability</p>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/photography.jpg' %}" alt="Photography">
-                        <p>Photography, Capturing Moments and Landscapes</p>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/community.jpg' %}" alt="Community">
-                        <p>Active Member of Local Community Groups</p>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'resume/images/music.jpg' %}" alt="Music">
-                        <p>Loves Music, Attending Concerts</p>
-                    </div>
+
+            <div class="item" style="background-image: url('{% static 'resume/images/reading.jpg' %}');">
+                <div class="item-desc">
+                    <h3>rock</h3>
+                    <p>Hiking and Exploring Nature Trails</p>
                 </div>
             </div>
-            <button class="carousel-arrow right" onclick="moveCarousel('beyond', 1)">→</button>
+
+            <div class="item" style="background-image: url('{% static 'resume/images/reading.jpg' %}');">
+                <div class="item-desc">
+                    <h3>roll</h3>
+                    <p>Hiking and Exploring Nature Trails</p>
+                </div>
+            </div>
+
+
         </div>
+
     </div>
 </div>
 {% endblock %}

@@ -53,12 +53,14 @@ if (mainHeading) {
     typeWriter();
 }
 
+
 // Animated counter for technologies
-//  const techCount = document.querySelectorAll('.technologies-list li').length;
+//  const techCount = document.querySelectorAll('.technologies-list li').length;   // <--- this is not needed anymore
 //  const techHeading = document.querySelector('.technologies-footer h2');
 //  if (techHeading && techCount > 0) {
 //      techHeading.textContent += ` (${techCount})`;
 //  }
+
 
 // Add hover sound effect (optional - can be annoying, comment out if you don't like it)
 document.querySelectorAll('.technologies-list li').forEach(icon => {
@@ -98,21 +100,34 @@ if (navbar) {
 const swiftUpElements = document.querySelectorAll('.swift-up-text');
 
 swiftUpElements.forEach(elem => {
-
-	const words = elem.textContent.split(' ');
-	elem.innerHTML = '';
-
-	words.forEach((el, index) => {
-		words[index] = `<span><i>${words[index]}</i></span>`;
-	});
-
-	elem.innerHTML = words.join(' ');
-
-	const children = document.querySelectorAll('span > i');
-	children.forEach((node, index) => {
-		node.style.animationDelay = `${index * .2}s`;
-	});
-
+    // Get HTML content to preserve BR tags
+    const html = elem.innerHTML;
+    const lines = html.split('<br>');
+    
+    elem.innerHTML = '';
+    
+    lines.forEach((line, lineIndex) => {
+        const words = line.trim().split(' ');
+        
+        words.forEach((word, wordIndex) => {
+            const span = document.createElement('span');
+            const i = document.createElement('i');
+            i.textContent = word;
+            i.style.animationDelay = `${(lineIndex * words.length + wordIndex) * 0.1}s`;
+            span.appendChild(i);
+            elem.appendChild(span);
+            
+            // Add space after word (except last word in line)
+            if (wordIndex < words.length - 1) {
+                elem.appendChild(document.createTextNode(' '));
+            }
+        });
+        
+        // Add line break after each line (except last)
+        if (lineIndex < lines.length - 1) {
+            elem.appendChild(document.createElement('br'));
+        }
+    });
 });
 
 // Particle Network Animation with random colors
@@ -278,27 +293,15 @@ document.querySelectorAll('a, button').forEach(el => {
     el.style.cursor = 'none';
 });
 
-// Carousel functionality
-const carouselPositions = {
-    hobbies: 0,
-    experience: 0,
-    beyond: 0
-};
 
-function moveCarousel(carouselId, direction) {
-    const track = document.getElementById(`${carouselId}-track`);
-    const items = track.querySelectorAll('.carousel-item');
-    const totalItems = items.length;
-    
-    carouselPositions[carouselId] += direction;
-    
-    // Loop around
-    if (carouselPositions[carouselId] < 0) {
-        carouselPositions[carouselId] = totalItems - 1;
-    } else if (carouselPositions[carouselId] >= totalItems) {
-        carouselPositions[carouselId] = 0;
-    }
-    
-    const offset = -carouselPositions[carouselId] * 100;
-    track.style.transform = `translateX(${offset}%)`;
-}
+// Initialize Owl Carousel
+$(".custom-carousel").owlCarousel({
+  autoWidth: true,
+  loop: true
+});
+$(document).ready(function () {
+  $(".custom-carousel .item").click(function () {
+    $(".custom-carousel .item").not($(this)).removeClass("active");
+    $(this).toggleClass("active");
+  });
+});
