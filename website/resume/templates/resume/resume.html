@@ -1,25 +1,238 @@
 {% extends 'resume/base.html' %}
 {% block content %}
-<div class ="container experience-page">
-    <h1 class="section-title">Experience</h1>
-    <div class="experience-item">
-        <h2 class="experience-role">Software Engineer</h2>
+<div class="resume-page">
+    <!-- TOP SECTION (Animated area) -->
+    <div class="top-dynamic-section">
+        <!-- Main Options -->
+        <div class="main-options" id="main-options">
+            <br>
+            <br>
+            <br>
+            <button class="option-btn" id="show-experience"><span>Experience</span></button>
+            <br>
+            <br>
+            <button class="option-btn" id="show-projects"><span>Projects</span></button>
+        </div>
+    
+        <!-- Experience Section -->
+        <div class="section hidden" id="experience-section">
+            <h2 class="title-container">My Experience</h2>
+            <div class="experience-list">
+                <div class="experience-card card">
+                    <!-- LEFT: Details (Now includes title and company) -->
+                    <div class="experience-details">
+                        <h3 class="job-title">IT Support Specialist</h3>
+                        <p class="company">Company Name</p>
+                        <p class="summary">Troubleshooting systems, improving reliability, and optimizing IT operations.</p>
+                        <ul class="highlights">
+                            <li>Automated repetitive tasks using Python and Bash scripts, reducing manual workload by 60%</li>
+                            <li>Managed network infrastructure serving 200+ users across multiple locations</li>
+                            <li>Implemented monitoring solutions that improved system uptime to 99.8%</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- RIGHT: Timeline (ONLY dates) -->
+                    <div class="experience-timeline">
+                        <p class="dates">2021 - Present</p>
+                    </div>
+                </div>
+
+                <div class="experience-card card">
+                    <!-- LEFT: Details -->
+                    <div class="experience-details">
+                        <h3 class="job-title">Junior Developer</h3>
+                        <p class="company">Tech Solutions Inc</p>
+                        <p class="summary">Developed web applications and maintained existing codebases while learning modern development practices.</p>
+                        <ul class="highlights">
+                            <li>Built responsive web applications using React and Django frameworks</li>
+                            <li>Collaborated with senior developers on code reviews and best practices</li>
+                            <li>Reduced page load times by 40% through optimization techniques</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- RIGHT: Timeline -->
+                    <div class="experience-timeline">
+                        <p class="dates">2019 - 2021</p>
+                    </div>
+                </div>
+                <!-- ADD HERE A NEW CARD -->
+            </div>
+            <button class="back-btn" data-target="experience-section">← Back to Menu</button>
+        </div>
+        
+        <!-- Projects Section -->
+        <div class="section hidden" id="projects-section">
+            <h2>My Projects</h2>
+            
+            <div class="project-carousel-container">
+                <div class="project-carousel-wrapper">
+                    <div class="project-list" id="projectList">
+                        <!-- Project Card 1 -->
+                        <div class="project-card">
+                            <!-- Left: Image -->
+                            <div class="project-image placeholder">
+                                💻
+                            </div>
+                            
+                            <!-- Right: Content -->
+                            <div class="project-content">
+                                <h3>Portfolio Website</h3>
+                                <p class="project-summary">
+                                    A full-stack personal portfolio showcasing my work with modern animations and responsive design.
+                                </p>
+                                <ul class="project-points">
+                                    <li>Built from scratch using Django framework with custom backend logic</li>
+                                    <li>Implemented particle network animation using Canvas API</li>
+                                    <li>Created smooth scroll animations and interactive UI elements</li>
+                                    <li>Fully responsive design that adapts to all screen sizes</li>
+                                </ul>
+                                <div class="project-technologies">
+                                    <span>Technologies:</span>
+                                    <div class="tech-icons">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="tech-icon" title="Python">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" class="tech-icon" title="Django">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="tech-icon" title="JavaScript">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" class="tech-icon" title="HTML5">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" class="tech-icon" title="CSS3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Project Card 2 -->
+                        <div class="project-card">
+                            <!-- Left: Image -->
+                            <div class="project-image placeholder">
+                                🗄️
+                            </div>
+                            
+                            <!-- Right: Content -->
+                            <div class="project-content">
+                                <h3>NAS Backup System</h3>
+                                <p class="project-summary">
+                                    Custom-built network storage solution with automated backup and synchronization capabilities.
+                                </p>
+                                <ul class="project-points">
+                                    <li>Designed and built custom NAS solution using Raspberry Pi hardware</li>
+                                    <li>Developed backup automation scripts in Go for maximum reliability</li>
+                                    <li>Implemented RAID configuration for data redundancy and protection</li>
+                                    <li>Created web interface for monitoring backup status and system health</li>
+                                </ul>
+                                <div class="project-technologies">
+                                    <span>Technologies:</span>
+                                    <div class="tech-icons">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go" class="tech-icon" title="Go">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" class="tech-icon" title="Linux">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" alt="Raspberry Pi" class="tech-icon" title="Raspberry Pi">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" class="tech-icon" title="Bash">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Project Card 3 -->
+                        <div class="project-card">
+                            <!-- Left: Image -->
+                            <div class="project-image placeholder">
+                                ⚙️
+                            </div>
+                            
+                            <!-- Right: Content -->
+                            <div class="project-content">
+                                <h3>Automation Scripts</h3>
+                                <p class="project-summary">
+                                    Collection of automation tools to streamline IT operations and reduce manual workload.
+                                </p>
+                                <ul class="project-points">
+                                    <li>Developed Python scripts for automated system health checks</li>
+                                    <li>Created backup automation reducing manual backup time by 80%</li>
+                                    <li>Integrated multiple APIs for seamless data synchronization</li>
+                                    <li>Built notification system for critical alerts via email and Slack</li>
+                                </ul>
+                                <div class="project-technologies">
+                                    <span>Technologies:</span>
+                                    <div class="tech-icons">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="tech-icon" title="Python">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" class="tech-icon" title="Bash">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" class="tech-icon" title="Git">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <!-- Navigation Buttons -->
+                <div class="carousel-nav">
+                    <button class="carousel-btn" id="prevProject">←</button>
+                    <button class="carousel-btn" id="nextProject">→</button>
+                </div>
+                
+                <!-- Project Counter -->
+                <div class="project-counter">
+                    <span id="currentProject">1</span> / <span id="totalProjects">3</span>
+                </div>
+            </div>
+            
+            <button class="back-btn" data-target="projects-section">← Back to Menu</button>
+        </div>
+        
+    </div>
+</div>
 
 
-   <div class="technologies-footer">
+<br>
+<br>
+
+<div class="bottom-section">
+    <!-- Certifications Section -->
+    <div class="certifications">
+        <h2>Certifications</h2>
+        <ul class="certifications-list">
+            <li>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" title="Certified Python Developer - Python Institute">
+                <span>Python Institute</span>
+            </li>
+            <li>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" title="Django Web Development - Coursera">
+                <span>Coursera</span>
+            </li>
+            <li>
+                <img src="https://img.icons8.com/color/96/000000/certificate.png" alt="Full Stack" title="Full Stack Web Development - Udemy">
+                <span>Udemy</span>
+            </li>
+        </ul>
+    </div> 
+    <!-- Tech Skills Section -->
+    <div class="technologies-footer">
         <h2>Tech Skills</h2>
         <ul class="technologies-list">
-            <li><i class="devicon-python-plain colored"></i></li>
-            <li><i class="devicon-django-plain colored"></i></li>
-            <li><i class="devicon-html5-plain colored"></i></li>
-            <li><i class="devicon-css3-plain colored"></i></li>
-            <li><i class="devicon-javascript-plain colored"></i></li>
-            <li><i class="devicon-react-original colored"></i></li>
-            <li><i class="devicon-nodejs-plain colored"></i></li>
-            <li><i class="devicon-postgresql-plain colored"></i></li>
+            <li><span class="iconify" data-icon="logos:python"></span></li>
+            <li><span class="iconify" data-icon="logos:django-icon"></span></li>
+            <li><span class="iconify" data-icon="logos:html-5"></span></li>
+            <li><span class="iconify" data-icon="logos:css-3"></span></li>
+            <li><span class="iconify" data-icon="logos:javascript"></span></li>
+            <li><span class="iconify" data-icon="logos:react"></span></li>
+            <li><span class="iconify" data-icon="logos:nodejs-icon"></span></li>
+            <li><span class="iconify" data-icon="logos:postgresql"></span></li>
         </ul>
     </div>
 
+    <!-- Education section -->
+    <div class="educations">
+        <h2>Education</h2>
+        <ul class="educations-list">
+            <li>
+                <h3>Bachelor's in Computer Science</h3>
+                <p><strong>University Name</strong> | 2017 - 2021</p>
+                <p>Relevant Coursework: Data Structures, Algorithms, Database Systems, Networking, Web Development</p>
+            </li>
+            <li>
+                <h3>High School Diploma</h3>
+                <p><strong>High School Name</strong> | 2013 - 2017</p>
+                <p>Graduated with Honors, Focus on Science and Mathematics</p>
+            </li>
+        </ul>
+    </div>    
+</div> 
 
-</div>
 {% endblock %}
