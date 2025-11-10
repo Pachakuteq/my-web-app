@@ -1,20 +1,22 @@
 {% extends 'resume/base.html' %}
 {% block content %}
-<div class="container">  
-    <div class="header-grid">
-        <h1 class="swift-up-text">Hey There! <br> I'm Jose David</h1>
-        <div class="title-container">
-            <h2 class="main-title">Full Stack Developer</h2>
+<div class="home-page">
+    <div class="container">  
+        <div class="header-grid">
+            <h1 class="swift-up-text">Hey There! <br> I'm Jose David</h1>
+            <div class="title-container">
+                <h2 class="main-title">Junior Developer | Backend & DevOps</h2>
+            </div>
         </div>
+        
+        <div class="content-section">
+            <ul>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'resume' %}">Resume</a></li>
+            </ul>
+        </div> 
+    
+        
     </div>
-    
-    <div class="content-section">
-        <ul>
-            <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="{% url 'resume' %}">Resume</a></li>
-        </ul>
-    </div> 
-
-    
-</div>
+</div>    
 {% endblock %}

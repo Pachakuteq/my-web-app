@@ -1,6 +1,58 @@
 {% extends 'resume/base.html' %}
 {% block content %}
 
+<div class="contact-wrapper">
+    
+    <!-- LEFT: Contact Info -->
+    <div class="contact-info-container">
+        <h2>Contact Info</h2>
+        
+        <div class="contact-info-item">
+            <i class="fas fa-envelope"></i>
+            <div class="info-content">
+                <span class="info-label">Email</span>
+                <a href="mailto:your.email@example.com" class="info-value">your.email@example.com</a>
+            </div>
+        </div>
+        
+        <div class="contact-info-item">
+            <i class="fas fa-phone"></i>
+            <div class="info-content">
+                <span class="info-label">Phone</span>
+                <span class="info-value">+1 (123) 456-7890</span>
+            </div>
+        </div>
+        
+        <div class="contact-info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div class="info-content">
+                <span class="info-label">Location</span>
+                <span class="info-value">San José, Costa Rica</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- RIGHT: Contact Form -->
+    <div class="contact-form-container">
+        <h2>Get in Touch</h2>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
 
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Send Message">
+        </form>
+    </div>
+    
+</div>
 
 {% endblock %}

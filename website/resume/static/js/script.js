@@ -1,6 +1,6 @@
 console.log('Hello from external JS!');
 
-// Smooth scroll for navigation links
+//  Smooth scroll for navigation links
 document.querySelectorAll('nav a').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         if (this.getAttribute('href').startsWith('#')) {
@@ -35,6 +35,7 @@ document.querySelectorAll('.project-card, .header-block, .section-block').forEac
     observer.observe(el);
 });
 
+///----------------------------------------------------------------------- Typing effect for main heading in home.html
 // Add typing effect to main heading
 const mainHeading = document.querySelector('.header-block h1');
 if (mainHeading) {
@@ -52,15 +53,6 @@ if (mainHeading) {
     
     typeWriter();
 }
-
-
-// Animated counter for technologies
-//  const techCount = document.querySelectorAll('.technologies-list li').length;   // <--- this is not needed anymore
-//  const techHeading = document.querySelector('.technologies-footer h2');
-//  if (techHeading && techCount > 0) {
-//      techHeading.textContent += ` (${techCount})`;
-//  }
-
 
 // Add hover sound effect (optional - can be annoying, comment out if you don't like it)
 document.querySelectorAll('.technologies-list li').forEach(icon => {
@@ -130,7 +122,10 @@ swiftUpElements.forEach(elem => {
     });
 });
 
+
+//  ---------------------------------------------------------------------- animation of the particle in the background
 // Particle Network Animation with random colors
+// Particle Network Animation with geometric figures
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -143,17 +138,17 @@ window.addEventListener('resize', () => {
 });
 
 // Array of colors to randomly choose from
-const colors = ['#293241', '#ee6c4d', '#3d5a80', '#98c1d9', '#e0fbfc', '#ee6c4d'];
+const colors = ['#000000', '#1f2a2d', '#f8ddb0', '#bcd8e7', '#e58f65'];
 
 class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
+        this.vx = (Math.random() - 0.5) * 0.8; // Increased from 0.5 to 0.8
+        this.vy = (Math.random() - 0.5) * 0.8; // Increased from 0.5 to 0.8
         this.radius = 2;
         this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.colorChangeInterval = Math.random() * 3000 + 2000; // 2-5 seconds
+        this.colorChangeInterval = Math.random() * 3000 + 2000;
         this.lastColorChange = Date.now();
     }
 
@@ -187,15 +182,84 @@ for (let i = 0; i < particleCount; i++) {
     particles.push(new Particle());
 }
 
-function connectParticles() {
+function findConnectedParticles() {
+    const connections = [];
+    
     for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
+        const connected = [i];
+        
+        for (let j = 0; j < particles.length; j++) {
+            if (i === j) continue;
+            
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 150) {
+                connected.push(j);
+            }
+        }
+        
+        if (connected.length >= 3) {
+            connections.push(connected);
+        }
+    }
+    
+    return connections;
+}
+
+function drawGeometricShape(indices) {
+    if (indices.length < 3) return;
+    
+    // Take first 3-6 particles to form a shape
+    const shapeSize = Math.min(indices.length, Math.floor(Math.random() * 4) + 3);
+    const shapeIndices = indices.slice(0, shapeSize);
+    
+    // Random color with transparency
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    let r, g, b;
+    
+    if (randomColor.startsWith('#')) {
+        const hex = randomColor.replace('#', '');
+        r = parseInt(hex.substr(0, 2), 16);
+        g = parseInt(hex.substr(2, 2), 16);
+        b = parseInt(hex.substr(4, 2), 16);
+    }
+    
+    // Draw filled shape
+    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.15)`;
+    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
+    ctx.lineWidth = 1.5;
+    
+    ctx.beginPath();
+    ctx.moveTo(particles[shapeIndices[0]].x, particles[shapeIndices[0]].y);
+    
+    for (let i = 1; i < shapeIndices.length; i++) {
+        ctx.lineTo(particles[shapeIndices[i]].x, particles[shapeIndices[i]].y);
+    }
+    
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+}
+
+function connectParticles() {
+    const drawnShapes = new Set();
+    
+    for (let i = 0; i < particles.length; i++) {
+        const connected = [i];
+        
+        for (let j = 0; j < particles.length; j++) {
+            if (i === j) continue;
+            
             const dx = particles[i].x - particles[j].x;
             const dy = particles[i].y - particles[j].y;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < 150) {
-                // Use color from one of the particles
+                connected.push(j);
+                
+                // Draw connection line
                 const color = particles[i].color;
                 let r, g, b;
                 
@@ -204,11 +268,6 @@ function connectParticles() {
                     r = parseInt(hex.substr(0, 2), 16);
                     g = parseInt(hex.substr(2, 2), 16);
                     b = parseInt(hex.substr(4, 2), 16);
-                } else {
-                    const rgb = color.match(/\d+/g);
-                    r = rgb[0];
-                    g = rgb[1];
-                    b = rgb[2];
                 }
                 
                 ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${1 - distance / 150})`;
@@ -217,6 +276,15 @@ function connectParticles() {
                 ctx.moveTo(particles[i].x, particles[i].y);
                 ctx.lineTo(particles[j].x, particles[j].y);
                 ctx.stroke();
+            }
+        }
+        
+        // Draw geometric shape if 3+ particles are connected
+        if (connected.length >= 3) {
+            const shapeKey = connected.sort().join('-');
+            if (!drawnShapes.has(shapeKey)) {
+                drawGeometricShape(connected);
+                drawnShapes.add(shapeKey);
             }
         }
     }
@@ -236,11 +304,15 @@ function animate() {
 
 animate();
 
-// Subtle custom cursor
+//----------------------------------------------------------------------- animation of custom cursor
+// === Custom animated symbol cursor ===
+
+// Create the glowing dot
 const cursorDot = document.createElement('div');
 cursorDot.classList.add('cursor-dot');
 document.body.appendChild(cursorDot);
 
+// Create the outline ring
 const cursorOutline = document.createElement('div');
 cursorOutline.classList.add('cursor-outline');
 document.body.appendChild(cursorOutline);
@@ -250,31 +322,30 @@ let mouseY = 0;
 let outlineX = 0;
 let outlineY = 0;
 
+// Mouse movement
 document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     
-    // Dot follows immediately
-    cursorDot.style.left = mouseX + 'px';
-    cursorDot.style.top = mouseY + 'px';
+    // Dot follows instantly
+    cursorDot.style.left = `${mouseX}px`;
+    cursorDot.style.top = `${mouseY}px`;
 });
 
-// Smooth outline animation
+// Smooth outline follow animation
 function animateOutline() {
     outlineX += (mouseX - outlineX) * 0.15;
     outlineY += (mouseY - outlineY) * 0.15;
     
-    cursorOutline.style.left = outlineX + 'px';
-    cursorOutline.style.top = outlineY + 'px';
+    cursorOutline.style.left = `${outlineX}px`;
+    cursorOutline.style.top = `${outlineY}px`;
     
     requestAnimationFrame(animateOutline);
 }
-
 animateOutline();
 
-// Scale up on hover
+// Hover scaling for interactive elements
 const hoverElements = document.querySelectorAll('a, button, .nav-links a, .content-section a');
-
 hoverElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
         cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
@@ -287,12 +358,22 @@ hoverElements.forEach(el => {
     });
 });
 
+// ✨ Click "pop" effect
+document.addEventListener('click', () => {
+    cursorDot.style.transform = 'translate(-50%, -50%) scale(1.8)';
+    cursorDot.style.opacity = '0.8';
+    setTimeout(() => {
+        cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursorDot.style.opacity = '1';
+    }, 120);
+});
 
 // Hide default cursor
 document.body.style.cursor = 'none';
 document.querySelectorAll('a, button').forEach(el => {
     el.style.cursor = 'none';
 });
+
 
 
 // Initialize Owl Carousel
@@ -307,7 +388,7 @@ $(document).ready(function () {
   });
 });
 
-// **resume effects
+///----------------------------------------------------------------------- Resume page card expansion
 
 // Toggle card expansion
 function toggleCard(card) {
@@ -445,11 +526,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-
-// Wandering Logo on About Page with Drag and Navbar Docking
+//--------------------------------------------------------------------------------------wandering logo animation for home  page
+// Wandering Logo on HOME Page with Drag and Navbar Docking
 document.addEventListener('DOMContentLoaded', () => {
   // Only run on about page
-  if (!document.querySelector('.about-page')) return;
+  if (!document.querySelector('.home-page')) return;
   
   const logo = document.querySelector('.logo img');
   const navbar = document.querySelector('.navbar');
@@ -471,8 +552,18 @@ document.addEventListener('DOMContentLoaded', () => {
   wanderingLogo.style.transition = 'width 0.3s ease, opacity 0.3s ease';
   document.body.appendChild(wanderingLogo);
   
-  let currentX = window.innerWidth / 2;
-  let currentY = window.innerHeight / 2;
+  // Random starting position
+  function getRandomStartPosition() {
+    const margin = 150;
+    return {
+      x: margin + Math.random() * (window.innerWidth - margin * 2),
+      y: margin + Math.random() * (window.innerHeight - margin * 2)
+    };
+  }
+  
+  const startPos = getRandomStartPosition();
+  let currentX = startPos.x;
+  let currentY = startPos.y;
   let targetX = currentX;
   let targetY = currentY;
   let isDragging = false;
@@ -703,10 +794,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   
-  // Set initial random target
-  const initialTarget = getRandomTarget();
-  targetX = initialTarget.x;
-  targetY = initialTarget.y;
+  // Set initial random target (different from start position)
+  targetX = currentX;
+  targetY = currentY;
+  
+  setTimeout(() => {
+    const initialTarget = getRandomTarget();
+    targetX = initialTarget.x;
+    targetY = initialTarget.y;
+  }, 1000);
   
   animate();
   
@@ -720,265 +816,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
-// Wandering Logo on Resume Page with Drag and Navbar Docking
-document.addEventListener('DOMContentLoaded', () => {
-  // Only run on resume page
-  if (!document.querySelector('.resume-page')) return;
-  
-  const logo = document.querySelector('.logo img');
-  const navbar = document.querySelector('.navbar');
-  
-  if (!logo || !navbar) return;
-  
-  // Hide the original navbar logo on resume page
-  logo.style.opacity = '0';
-  
-  // Create a clone of the logo for animation
-  const wanderingLogo = logo.cloneNode(true);
-  wanderingLogo.classList.add('wandering-logo-resume');
-  wanderingLogo.style.position = 'fixed';
-  wanderingLogo.style.zIndex = '999';
-  wanderingLogo.style.width = '120px';
-  wanderingLogo.style.height = 'auto';
-  wanderingLogo.style.opacity = '0.9';
-  wanderingLogo.style.cursor = 'grab';
-  wanderingLogo.style.transition = 'width 0.3s ease, opacity 0.3s ease';
-  document.body.appendChild(wanderingLogo);
-  
-  let currentX = window.innerWidth / 2;
-  let currentY = window.innerHeight / 2;
-  let targetX = currentX;
-  let targetY = currentY;
-  let isDragging = false;
-  let isDocked = false;
-  let dragOffsetX = 0;
-  let dragOffsetY = 0;
-  let undockTimeout = null;
-  
-  function getNavbarLogoPosition() {
-    const logoRect = logo.getBoundingClientRect();
-    return {
-      x: logoRect.left + logoRect.width / 2,
-      y: logoRect.top + logoRect.height / 2
-    };
-  }
-  
-  function getRandomTarget() {
-    const radius = 200;
-    const angle = Math.random() * Math.PI * 2;
-    const distance = Math.random() * radius;
-    
-    let newX = currentX + Math.cos(angle) * distance;
-    let newY = currentY + Math.sin(angle) * distance;
-    
-    const margin = 150;
-    newX = Math.max(margin, Math.min(window.innerWidth - margin, newX));
-    newY = Math.max(margin, Math.min(window.innerHeight - margin, newY));
-    
-    return { x: newX, y: newY };
-  }
-  
-  function lerp(start, end, factor) {
-    return start + (end - start) * factor;
-  }
-  
-  function createFirework(x, y) {
-    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B739', '#52B788'];
-    const particleCount = 30;
-    
-    for (let i = 0; i < particleCount; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'firework-particle';
-      particle.style.position = 'fixed';
-      particle.style.left = x + 'px';
-      particle.style.top = y + 'px';
-      particle.style.width = '8px';
-      particle.style.height = '8px';
-      particle.style.borderRadius = '50%';
-      particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      particle.style.pointerEvents = 'none';
-      particle.style.zIndex = '1000';
-      particle.style.boxShadow = `0 0 10px ${colors[Math.floor(Math.random() * colors.length)]}`;
-      document.body.appendChild(particle);
-      
-      const angle = (Math.PI * 2 * i) / particleCount;
-      const velocity = 3 + Math.random() * 3;
-      const vx = Math.cos(angle) * velocity;
-      const vy = Math.sin(angle) * velocity;
-      
-      let px = x;
-      let py = y;
-      let opacity = 1;
-      let scale = 1;
-      
-      function animateParticle() {
-        px += vx;
-        py += vy;
-        opacity -= 0.015;
-        scale += 0.02;
-        
-        particle.style.left = px + 'px';
-        particle.style.top = py + 'px';
-        particle.style.opacity = opacity;
-        particle.style.transform = `scale(${scale})`;
-        
-        if (opacity > 0) {
-          requestAnimationFrame(animateParticle);
-        } else {
-          particle.remove();
-        }
-      }
-      
-      animateParticle();
-    }
-  }
-  
-  function dockToNavbar() {
-    isDocked = true;
-    const navPos = getNavbarLogoPosition();
-    currentX = navPos.x;
-    currentY = navPos.y;
-    targetX = navPos.x;
-    targetY = navPos.y;
-    
-    wanderingLogo.style.width = '39px';
-    wanderingLogo.style.left = navPos.x + 'px';
-    wanderingLogo.style.top = navPos.y + 'px';
-    
-    createFirework(navPos.x, navPos.y);
-    
-    logo.style.opacity = '1';
-    
-    setTimeout(() => {
-      wanderingLogo.style.opacity = '0';
-    }, 300);
-    
-    undockTimeout = setTimeout(() => {
-      undockFromNavbar();
-    }, 120000);
-  }
-  
-  function undockFromNavbar() {
-    isDocked = false;
-    logo.style.opacity = '0';
-    wanderingLogo.style.opacity = '0.9';
-    wanderingLogo.style.width = '120px';
-    
-    const navPos = getNavbarLogoPosition();
-    currentX = navPos.x;
-    currentY = navPos.y;
-    
-    const newTarget = getRandomTarget();
-    targetX = newTarget.x;
-    targetY = newTarget.y;
-  }
-  
-  function isNearNavbar(x, y) {
-    const navPos = getNavbarLogoPosition();
-    const distance = Math.sqrt(
-      Math.pow(x - navPos.x, 2) + Math.pow(y - navPos.y, 2)
-    );
-    return distance < 80;
-  }
-  
-  function animate() {
-    if (!isDragging && !isDocked) {
-      currentX = lerp(currentX, targetX, 0.005);
-      currentY = lerp(currentY, targetY, 0.005);
-      
-      const time = Date.now() * 0.0005;
-      const floatX = Math.sin(time * 0.5) * 8;
-      const floatY = Math.cos(time * 0.7) * 8;
-      
-      wanderingLogo.style.left = (currentX + floatX) + 'px';
-      wanderingLogo.style.top = (currentY + floatY) + 'px';
-      
-      const distanceToTarget = Math.sqrt(
-        Math.pow(targetX - currentX, 2) + Math.pow(targetY - currentY, 2)
-      );
-      
-      if (distanceToTarget < 20) {
-        const newTarget = getRandomTarget();
-        targetX = newTarget.x;
-        targetY = newTarget.y;
-      }
-    }
-    
-    wanderingLogo.style.transform = 'translate(-50%, -50%)';
-    requestAnimationFrame(animate);
-  }
-  
-  wanderingLogo.addEventListener('mousedown', (e) => {
-    if (isDocked) {
-      if (undockTimeout) {
-        clearTimeout(undockTimeout);
-        undockTimeout = null;
-      }
-      isDocked = false;
-      logo.style.opacity = '0';
-      wanderingLogo.style.opacity = '0.9';
-      wanderingLogo.style.width = '120px';
-    }
-    
-    isDragging = true;
-    wanderingLogo.style.cursor = 'grabbing';
-    
-    const rect = wanderingLogo.getBoundingClientRect();
-    dragOffsetX = e.clientX - rect.left - rect.width / 2;
-    dragOffsetY = e.clientY - rect.top - rect.height / 2;
-    
-    e.preventDefault();
-  });
-  
-  document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-      currentX = e.clientX - dragOffsetX;
-      currentY = e.clientY - dragOffsetY;
-      
-      wanderingLogo.style.left = currentX + 'px';
-      wanderingLogo.style.top = currentY + 'px';
-      
-      if (isNearNavbar(currentX, currentY)) {
-        wanderingLogo.style.opacity = '0.6';
-      } else {
-        wanderingLogo.style.opacity = '0.9';
-      }
-    }
-  });
-  
-  document.addEventListener('mouseup', () => {
-    if (isDragging) {
-      isDragging = false;
-      wanderingLogo.style.cursor = 'grab';
-      
-      if (isNearNavbar(currentX, currentY)) {
-        dockToNavbar();
-      } else {
-        targetX = currentX;
-        targetY = currentY;
-        wanderingLogo.style.opacity = '0.9';
-        
-        setTimeout(() => {
-          const newTarget = getRandomTarget();
-          targetX = newTarget.x;
-          targetY = newTarget.y;
-        }, 500);
-      }
-    }
-  });
-  
-  const initialTarget = getRandomTarget();
-  targetX = initialTarget.x;
-  targetY = initialTarget.y;
-  
-  animate();
-  
-  window.addEventListener('resize', () => {
-    if (!isDocked) {
-      const newTarget = getRandomTarget();
-      targetX = newTarget.x;
-      targetY = newTarget.y;
-    }
-  });
-});
