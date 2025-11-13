@@ -112,20 +112,14 @@
     <div class="certifications">
         <h2>Certifications</h2>
         <ul class="certifications-list">
-            <li>
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" title="Certified Python Developer - Python Institute">
-                <span>Python Institute</span>
+            {% for cert in certifications %}
+            <li title="{{ cert.name }}">
+                <img src="{{ cert.image_url }}" alt="{{ cert.short_name }}">
+                <span>{{ cert.short_name }}</span>
             </li>
-            <li>
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" title="Django Web Development - Coursera">
-                <span>Coursera</span>
-            </li>
-            <li>
-                <img src="https://img.icons8.com/color/96/000000/certificate.png" alt="Full Stack" title="Full Stack Web Development - Udemy">
-                <span>Udemy</span>
-            </li>
+            {% endfor %}
         </ul>
-    </div> 
+    </div>
     <!-- Tech Skills Section -->
     <div class="technologies-footer">
         <h2>Tech Skills</h2>
@@ -135,9 +129,10 @@
             <li><span class="iconify" data-icon="logos:html-5"></span></li>
             <li><span class="iconify" data-icon="logos:css-3"></span></li>
             <li><span class="iconify" data-icon="logos:javascript"></span></li>
-            <li><span class="iconify" data-icon="logos:react"></span></li>
-            <li><span class="iconify" data-icon="logos:nodejs-icon"></span></li>
-            <li><span class="iconify" data-icon="logos:postgresql"></span></li>
+            <li><span class="iconify" data-icon="logos:bash"></span></li>
+            <li><span class="iconify" data-icon="logos:mysql"></span></li>
+            <li><span class="iconify" data-icon="logos:git-icon"></span></li>
+            <li><span class="iconify" data-icon="logos:jenkins"></span></li>
         </ul>
     </div>
 
@@ -146,15 +141,14 @@
         <h2>Education</h2>
         <ul class="educations-list">
             <li>
-                <h3>Bachelor's in Computer Science</h3>
-                <p><strong>University Name</strong> | 2017 - 2021</p>
+                <h3>Computer Science and Engineering</h3>
+                <p><strong>Technological University of Peru |  Expected graduation: 2027 </strong></p>
                 <p>Relevant Coursework: Data Structures, Algorithms, Database Systems, Networking, Web Development</p>
             </li>
             <li>
-                <h3>High School Diploma</h3>
-                <p><strong>High School Name</strong> | 2013 - 2017</p>
-                <p>Graduated with Honors, Focus on Science and Mathematics</p>
-            </li>
+                <h3>Languages </h3>
+                <p>Spanish (Native) | English (C1) | French (learning)</p>
+            </li>    
         </ul>
     </div>    
 </div> 

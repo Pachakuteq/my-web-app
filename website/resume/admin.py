@@ -1,12 +1,6 @@
 from django.contrib import admin
 from .models import *
 
-class homeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'summary')
-
-admin.site.register(Home, homeAdmin)
-
-
 class experienceAdmin(admin.ModelAdmin):
     list_display = ('job_title', 'company', 'start_date', 'end_date', 'order')
 
@@ -32,3 +26,18 @@ class technologyAdmin(admin.ModelAdmin):
     list_display = ('project', 'name', 'order', 'icon_url')
 
 admin.site.register(Technology, technologyAdmin)
+
+class certificationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'short_name', 'image_url', 'order')
+
+admin.site.register(Certification, certificationAdmin)
+
+class carouselSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order')
+
+admin.site.register(CarouselSection, carouselSectionAdmin)
+
+class carouselItemInline(admin.ModelAdmin):
+    list_display = ('section', 'title', 'description', 'order', 'image')
+
+admin.site.register(CarouselItem, carouselItemInline)

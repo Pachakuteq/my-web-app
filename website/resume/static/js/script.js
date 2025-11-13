@@ -124,7 +124,6 @@ swiftUpElements.forEach(elem => {
 
 
 //  ---------------------------------------------------------------------- animation of the particle in the background
-// Particle Network Animation with random colors
 // Particle Network Animation with geometric figures
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -144,8 +143,8 @@ class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.8; // Increased from 0.5 to 0.8
-        this.vy = (Math.random() - 0.5) * 0.8; // Increased from 0.5 to 0.8
+        this.vx = (Math.random() - 0.5) * 0.4; // Reduced from 0.8 to 0.4 (slower)
+        this.vy = (Math.random() - 0.5) * 0.4; // Reduced from 0.8 to 0.4 (slower)
         this.radius = 2;
         this.color = colors[Math.floor(Math.random() * colors.length)];
         this.colorChangeInterval = Math.random() * 3000 + 2000;
@@ -177,6 +176,8 @@ class Particle {
 
 const particles = [];
 const particleCount = 80;
+const activeShapes = new Map(); // Track shapes with fade in/out
+const shapeStability = new Map(); // Track how long shapes have existed
 
 for (let i = 0; i < particleCount; i++) {
     particles.push(new Particle());
@@ -208,7 +209,7 @@ function findConnectedParticles() {
     return connections;
 }
 
-function drawGeometricShape(indices) {
+function drawGeometricShape(indices, opacity = 1) {
     if (indices.length < 3) return;
     
     // Take first 3-6 particles to form a shape
@@ -226,9 +227,9 @@ function drawGeometricShape(indices) {
         b = parseInt(hex.substr(4, 2), 16);
     }
     
-    // Draw filled shape
-    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.15)`;
-    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.4)`;
+    // Draw filled shape with controlled opacity
+    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.15 * opacity})`;
+    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.4 * opacity})`;
     ctx.lineWidth = 1.5;
     
     ctx.beginPath();
@@ -244,7 +245,10 @@ function drawGeometricShape(indices) {
 }
 
 function connectParticles() {
-    const drawnShapes = new Set();
+    const currentShapes = new Set();
+    const fadeSpeed = 0.03; // Controls fade speed
+    const stabilityThreshold = 3000; // Milliseconds particles must stay connected before shape appears
+    const currentTime = Date.now();
     
     for (let i = 0; i < particles.length; i++) {
         const connected = [i];
@@ -279,12 +283,54 @@ function connectParticles() {
             }
         }
         
-        // Draw geometric shape if 3+ particles are connected
+        // Check if shape should be drawn (3+ particles connected)
         if (connected.length >= 3) {
-            const shapeKey = connected.sort().join('-');
-            if (!drawnShapes.has(shapeKey)) {
-                drawGeometricShape(connected);
-                drawnShapes.add(shapeKey);
+            const shapeKey = connected.sort((a, b) => a - b).join('-');
+            currentShapes.add(shapeKey);
+            
+            // Track stability - how long has this shape existed?
+            if (!shapeStability.has(shapeKey)) {
+                shapeStability.set(shapeKey, currentTime);
+            }
+            
+            const shapeAge = currentTime - shapeStability.get(shapeKey);
+            
+            // Only draw if shape has been stable long enough
+            if (shapeAge >= stabilityThreshold) {
+                // Get or create shape opacity
+                if (!activeShapes.has(shapeKey)) {
+                    activeShapes.set(shapeKey, { opacity: 0, color: colors[Math.floor(Math.random() * colors.length)] });
+                }
+                
+                const shapeData = activeShapes.get(shapeKey);
+                
+                // Fade in
+                if (shapeData.opacity < 1) {
+                    shapeData.opacity = Math.min(1, shapeData.opacity + fadeSpeed);
+                }
+                
+                drawGeometricShape(connected, shapeData.opacity);
+            }
+        }
+    }
+    
+    // Clean up stability tracking for shapes that no longer exist
+    for (let key of shapeStability.keys()) {
+        if (!currentShapes.has(key)) {
+            shapeStability.delete(key);
+        }
+    }
+    
+    // Fade out shapes that no longer exist
+    for (let [key, shapeData] of activeShapes.entries()) {
+        if (!currentShapes.has(key) || !shapeStability.has(key)) {
+            shapeData.opacity = Math.max(0, shapeData.opacity - fadeSpeed);
+            
+            if (shapeData.opacity > 0) {
+                const indices = key.split('-').map(Number);
+                drawGeometricShape(indices, shapeData.opacity);
+            } else {
+                activeShapes.delete(key);
             }
         }
     }
@@ -374,22 +420,31 @@ document.querySelectorAll('a, button').forEach(el => {
     el.style.cursor = 'none';
 });
 
+//----------------------------------------------------------------------- Owl Carousel for about age - more section
 
-
-// Initialize Owl Carousel
-$(".custom-carousel").owlCarousel({
-  autoWidth: true,
-  loop: true
-});
+// Initialize each Owl Carousel separately
 $(document).ready(function () {
+  $(".custom-carousel").each(function() {
+    var itemCount = $(this).find('.item').length;
+    
+    $(this).owlCarousel({
+      autoWidth: true,
+      loop: false,
+      items: itemCount, // Show all items
+      margin: 15,
+      nav: false,
+      dots: true
+    });
+  });
+
+  // Click handler for toggle active state
   $(".custom-carousel .item").click(function () {
-    $(".custom-carousel .item").not($(this)).removeClass("active");
-    $(this).toggleClass("active");
+    $(this).toggleClass("active"); // Simply toggle on the clicked item
   });
 });
 
-///----------------------------------------------------------------------- Resume page card expansion
 
+///----------------------------------------------------------------------- Resume page card expansion
 // Toggle card expansion
 function toggleCard(card) {
   const details = card.querySelector('.card-details');

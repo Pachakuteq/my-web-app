@@ -1,12 +1,5 @@
 from django.db import models
 
-class Home(models.Model):
-    name = models.CharField(max_length=100)
-    summary = models.TextField(max_length=1000)
-
-    def __str__(self):
-        return self.name
-
 class Experience(models.Model):
     job_title = models.CharField(max_length=200)
     company = models.CharField(max_length=200)
@@ -73,3 +66,43 @@ class Technology(models.Model):
     
     def __str__(self):
         return f"{self.project.title} - {self.name}"
+    
+
+class Certification(models.Model):
+    name = models.CharField(max_length=200)
+    short_name = models.CharField(max_length=50, help_text="Short display name (e.g., 'CCNA', 'AWS')")
+    image_url = models.URLField(help_text="URL to certification badge image")
+    order = models.IntegerField(default=0, help_text="Display order")
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name_plural = "Certifications"
+    
+    def __str__(self):
+        return self.name
+    
+
+class CarouselSection(models.Model):
+    title = models.CharField(max_length=200, help_text="Section title (e.g., 'Interests', 'Hobbies')")
+    order = models.IntegerField(default=0, help_text="Display order")
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name_plural = "Carousel Sections"
+    
+    def __str__(self):
+        return self.title
+
+class CarouselItem(models.Model):
+    section = models.ForeignKey(CarouselSection, on_delete=models.CASCADE, related_name='items')
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to='carousel_images/', help_text="Background image for the card")
+    order = models.IntegerField(default=0)
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name_plural = "Carousel Items"
+    
+    def __str__(self):
+        return f"{self.section.title} - {self.title}"

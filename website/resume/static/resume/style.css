@@ -539,6 +539,20 @@ input, textarea {
     }
 }
 
+/*****  Wandering Logo Styles - Glass effect with bottom shadow that is currently in the Home page  */
+.wandering-logo {
+  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.4));
+  will-change: transform, left, top;
+  backdrop-filter: blur(2px);
+  pointer-events: auto; /* Enable clicking/dragging */
+  transition: filter 0.3s ease;
+}
+
+.wandering-logo:hover {
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+}
+
+
 
 
 /* Background Canvas Style  (i am not sure for what it is.i think is for base or global*/
@@ -630,6 +644,7 @@ input, textarea {
     animation: fadeInUp 0.8s ease-out;
     position: relative;
     z-index: 10;
+    backdrop-filter: blur(5px); /* Blurs background behind */
 }
 
 .text-zone1::before {
@@ -656,7 +671,7 @@ input, textarea {
 
 .text-zone1 h1,
 .text-zone2 h1 {
-    color: #252422;
+    color: #000000;
     font-size: 2.5em;
     margin-bottom: 20px;
     font-weight: 600;
@@ -664,8 +679,8 @@ input, textarea {
 
 .text-zone1 p,
 .text-zone2 p {
-    color: #403d39;
-    font-size: 1.1em;
+    color: #27272b;
+    font-size: 1.3em;
     line-height: 1.8;
     margin-bottom: 15px;
 }
@@ -875,31 +890,6 @@ input, textarea {
   }
 }
 
-/* Wandering Logo Styles - Glass effect with bottom shadow */
-.wandering-logo {
-  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.4));
-  will-change: transform, left, top;
-  backdrop-filter: blur(2px);
-  pointer-events: auto; /* Enable clicking/dragging */
-  transition: filter 0.3s ease;
-}
-
-.wandering-logo:hover {
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-}
-
-/* Wandering Logo Styles for Resume Page */
-.wandering-logo-resume {
-  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.4));
-  will-change: transform, left, top;
-  backdrop-filter: blur(2px);
-  pointer-events: auto;
-  transition: filter 0.3s ease;
-}
-
-.wandering-logo-resume:hover {
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-}
 
 /************************************************************************** RESUME PAGE Styles */
 
@@ -1177,13 +1167,14 @@ input, textarea {
 /* Timeline Section (Only Dates, Completely Outside) */
 .experience-timeline {
   position: absolute;
-  left: calc(100% + 80px); /* Space from card edge */
+  left: calc(100% + 90px); /* Keep same position */
   top: 40px;
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 140px;
   z-index: 10;
+  padding-left: 25px; /* Add padding to push dates away from circle */
 }
 
 /* Dashed/Spaced Connecting Line from Card to Timeline */
@@ -1207,8 +1198,8 @@ input, textarea {
 .experience-timeline::after {
   content: '';
   position: absolute;
-  left: -10px; /* Position at left edge of timeline */
-  top: 7px;
+  left: -20px; /* Adjusted to align with vertical line */
+  top: 2px; 
   width: 14px;
   height: 14px;
   background: #e9c46a;
@@ -1218,14 +1209,14 @@ input, textarea {
   z-index: 5;
 }
 
-/* Vertical Line Connecting to Next Card */
+/* Vertical Line Connecting to Next Card - Keep original */
 .experience-card::after {
   content: '';
   position: absolute;
-  left: calc(100% + 77px); /* Align with timeline circle */
-  top: 47px; /* Start from circle */
+  left: calc(100% + 77px); /* Keep original */
+  top: 47px;
   width: 2px;
-  height: calc(100% + 45px); /* Extend to next card's margin */
+  height: calc(100% + 45px);
   background: #004540;
   z-index: 1;
 }
@@ -1592,7 +1583,7 @@ input, textarea {
 /* Bottom Section - Side by Side Layout */
 .bottom-section {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 70px;
     margin-top: 80px;
     padding: 40px 0;
@@ -1601,7 +1592,8 @@ input, textarea {
     margin-right: auto;
 }
 
-/* Certifications Section */
+
+/* Certifications Section - Visual Display */
 .certifications {
     background: transparent;
     padding: 0;
@@ -1619,27 +1611,34 @@ input, textarea {
 
 .certifications-list {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    justify-content: center;
+    gap: 40px;
     list-style: none;
     margin: 0;
     padding: 0;
+    flex-wrap: wrap;
 }
 
 .certifications-list li {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 15px;
-    padding: 10px 0;
+    padding: 25px;
     background: transparent;
-    border-radius: 0;
+    border-radius: 50%;
+    border: none; /* Removed border */
     transition: all 0.3s ease;
-    border-left: none;
+    width: 140px;
+    height: 140px;
+    cursor: pointer;
+    position: relative;
 }
 
 .certifications-list li:hover {
-    background: transparent;
-    transform: translateX(5px);
+    background: transparent; /* Stay transparent */
+    transform: scale(1.15); /* Just scale up */
 }
 
 .certifications-list li::before {
@@ -1647,22 +1646,33 @@ input, textarea {
 }
 
 .certifications-list img {
-    width: 30px;
-    height: 30px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
-    filter: grayscale(20%);
+    filter: grayscale(0%);
     transition: all 0.3s ease;
 }
 
 .certifications-list li:hover img {
-    filter: grayscale(0%);
-    transform: scale(1.1);
+    filter: brightness(1.05);
 }
 
+/* Show text below the circle */
 .certifications-list span {
-    color: #403d39;
-    font-size: 1.1em;
-    font-weight: 500;
+    position: absolute;
+    bottom: -30px;
+    color: #252422;
+    font-size: 0.9em;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.certifications-list li:hover span {
+    color: #eb5e28;
+    transform: translateY(-3px);
 }
 
 /* Tech Skills Section */
@@ -1775,7 +1785,7 @@ input, textarea {
     }
 }
 
-/* education bottom styles*/
+/* Education Section - Fixed Structure */
 .educations {
     background: transparent;
     padding: 0;
@@ -1791,18 +1801,11 @@ input, textarea {
     text-transform: uppercase;
 }
 
-.educations h3,p {
-    text-align: center;
-    color: #403d39;
-    font-size: 1.1em;
-    margin-bottom: 20px;
-    font-weight: 500;
-}
-
+/* Education list items */
 .educations-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -1810,9 +1813,9 @@ input, textarea {
 
 .educations-list li {
     display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 10px 0;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
     background: transparent;
     border-radius: 0;
     transition: all 0.3s ease;
@@ -1828,23 +1831,29 @@ input, textarea {
     display: none;
 }
 
-.educations-list img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-    filter: grayscale(20%);
-    transition: all 0.3s ease;
+/* Education title (h3) */
+.educations-list h3 {
+    text-align: left;
+    color: #000000;
+    font-size: 1.3em;
+    margin: 0 0 5px 0;
+    font-weight: 600;
 }
 
-.educations-list li:hover img {
-    filter: grayscale(0%);
-    transform: scale(1.1);
+/* Education paragraphs */
+.educations-list p {
+    text-align: right;
+    color: #333333;
+    font-size: 1.03em;
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.6;
 }
 
-.educations-list span {
-    color: #403d39;
-    font-size: 1em;
-    font-weight: 500;
+.educations-list strong {
+    font-weight: 600;
+    color: #00132d;
+
 }
 
 

@@ -8,18 +8,20 @@ from django.contrib import messages
 from django.template import loader
 
 def home(request):
-    homes = Home.objects.all()
-    return render(request, 'resume/home.html', {'homes': homes})
+    return render(request, 'resume/home.html')
 
 def about(request):
-    return render(request, 'resume/about.html')
+    carousel_sections = CarouselSection.objects.all()
+    carousel_sections = carousel_sections.prefetch_related('items')
+    return render(request, 'resume/about.html', {'carousel_sections': carousel_sections})
 
 def resume(request):
     experiences = Experience.objects.all()
     experiences = experiences.prefetch_related('highlights')
     projects = Project.objects.all()
     projects = projects.prefetch_related('points', 'technologies')
-    return render(request, 'resume/resume.html', {'experiences': experiences, 'projects': projects})
+    certifications = Certification.objects.all()
+    return render(request, 'resume/resume.html', {'experiences': experiences, 'projects': projects, 'certifications': certifications})
 
 def contact(request):
     if request.method == 'POST':

@@ -1,7 +1,9 @@
 {% extends 'resume/base.html' %}
 {% load static %}
 {% block content %}
-<div class="container about-page">  
+<div class="container about-page">
+
+    <!-- texts SECTION -->
     <div class="text-zone1">
         <h1>ABOUT ME</h1>
         <p>
@@ -34,53 +36,26 @@
             Driven by curiosity and a love of learning, I continue to explore, experiment, and challenge myself — always seeking ways to turn ideas into tangible, intelligent systems that make a difference.
         </p>
     </div>
+
+    <!-- MORE ABOUT SECTION -->
     <div class="more-about-heading">
         <h1> MORE </h1>
     </div>
+    {% for section in carousel_sections %}
     <div class="more-section">
-
-        <h2 class="line-title">Hobbies</h2>
-
+        <h2 class="line-title">{{ section.title }}</h2>
+    
         <div class="owl-carousel custom-carousel owl-theme">
-
-            <div class="item active" style="background-image: url('{% static 'resume/images/reading.jpg' %}');">
-                 <div class="item-desc">
-                     <h3>Reading</h3>
-                     <p>Gained diverse cultural perspectives through immersive experience hghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh hhhhhhhhhhhhhhhhhh hhhhhhhhhhhh</p>
-                 </div>
-            </div>
-            
-            <div class="item" style="background-image: url('{% static 'resume/images/reading.jpg' %}');">
+            {% for item in section.items.all %}
+            <div class="item" style="background-image: url('{{ item.image.url }}');">
                 <div class="item-desc">
-                    <h3>Hiking</h3>
-                    <p>Hiking and Exploring Nature Trails</p>
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description }}</p>
                 </div>
             </div>
-
-            <div class="item" style="background-image: url('{% static 'resume/images/reading.jpg' %}');">
-                <div class="item-desc">
-                    <h3>Guitar</h3>
-                    <p>Playing the Guitar</p>
-                </div>
-            </div>
-
-            <div class="item" style="background-image: url('{% static 'resume/images/reading.jpg' %}');">
-                <div class="item-desc">
-                    <h3>rock</h3>
-                    <p>Hiking and Exploring Nature Trails</p>
-                </div>
-            </div>
-
-            <div class="item" style="background-image: url('{% static 'resume/images/reading.jpg' %}');">
-                <div class="item-desc">
-                    <h3>roll</h3>
-                    <p>Hiking and Exploring Nature Trails</p>
-                </div>
-            </div>
-
-
+            {% endfor %}
         </div>
-
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
