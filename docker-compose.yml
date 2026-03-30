@@ -1,25 +1,26 @@
 services:
+  # Django application running with Gunicorn
   django:
-    build: .
+    build: .          # Build image from Dockerfile in current directory
     env_file:
-      - .env
+      - .env          # Load environment variables (SECRET_KEY, etc.)
     volumes:
-      - ./website/db.sqlite3:/app/website/db.sqlite3
-      - static_volume:/app/website/staticfiles
-      - ./website/media:/app/website/media
-  
+      - ./website/db.sqlite3:/app/website/db.sqlite3        # Persist SQLite database
+      - static_volume:/app/website/staticfiles              # Share static files with Nginx
+      - ./website/media:/app/website/media                  # Persist user uploaded media
 
+  # Nginx web server - handles incoming traffic and serves static files
   nginx:
     image: nginx
-    ports: 
-      - "80:80"
+    ports:
+      - "80:80"       # Expose port 80 to the host machine
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - static_volume:/app/website/staticfiles
-      - ./website/media:/app/website/media
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf # Mount Nginx config
+      - static_volume:/app/website/staticfiles              # Serve static files directly
+      - ./website/media:/app/website/media                  # Serve media files directly
     depends_on:
-      - django
-  
+      - django        # Wait for Django to start before Nginx
+
+# Named volumes shared between containers
 volumes:
-  static_volume:
-  media_volume:
+  static_volume:      # Shared volume for collectstatic output
