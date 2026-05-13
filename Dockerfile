@@ -18,3 +18,4 @@ RUN python website/manage.py collectstatic --noinput
 
 # Start Gunicorn production server on port 8000
 CMD ["gunicorn", "website.wsgi:application", "--bind", "0.0.0.0:8000", "--chdir", "/app/website"]
+

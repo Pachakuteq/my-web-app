@@ -2,25 +2,52 @@ services:
   # Django application running with Gunicorn
   django:
     build: .          # Build image from Dockerfile in current directory
-    env_file:
-      - .env          # Load environment variables (SECRET_KEY, etc.)
+    
+    # Environment variables - Railway injects these automatically
+    # ${VAR:-default} means: use Railway's VAR if exists, otherwise use default value
+    environment:
+      - PORT=${PORT:-8000}                    # Railway assigns dynamic port, use 8000 locally
+      - SECRET_KEY=${SECRET_KEY}              # Django secret key from Railway variables
+      - DEBUG=${DEBUG:-False}                 # Debug mode - False in production, can be True locally
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}        # Allowed domains (.railway.app, your custom domain)
+      - DATABASE_URL=${DATABASE_URL}          # PostgreSQL connection string (Railway auto-provides this)
+    
+    # Start command - runs Gunicorn web server instead of Django dev server
+    # Binds to 0.0.0.0 (all network interfaces) on Railway's assigned PORT
+    command: gunicorn website.wsgi:application --bind 0.0.0.0:${PORT:-8000}
+    
+    # Expose the port so other services can connect
+    # Uses Railway's PORT in production, 8000 locally
+    ports:
+      - "${PORT:-8000}:${PORT:-8000}"
+    
+    # Volumes - persistent storage
+    # REMOVED: SQLite volume (doesn't work on Railway, using PostgreSQL instead)
+    # KEPT: Static and media files
     volumes:
-      - ./website/db.sqlite3:/app/website/db.sqlite3        # Persist SQLite database
-      - static_volume:/app/website/staticfiles              # Share static files with Nginx
-      - ./website/media:/app/website/media                  # Persist user uploaded media
+      - static_volume:/app/website/staticfiles    # Collected static files (CSS, JS, images)
+      - media_volume:/app/website/media           # User-uploaded files
 
   # Nginx web server - handles incoming traffic and serves static files
   nginx:
     image: nginx
     ports:
-      - "80:80"       # Expose port 80 to the host machine
+      - "80:80"       # Expose port 80 for local development
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf # Mount Nginx config
       - static_volume:/app/website/staticfiles              # Serve static files directly
-      - ./website/media:/app/website/media                  # Serve media files directly
+      - media_volume:/app/website/media                     # Serve media files directly
     depends_on:
       - django        # Wait for Django to start before Nginx
+    
+    # Profiles control when this service runs
+    # "local" profile = only runs when you do: docker-compose --profile local up
+    # Railway ignores this service - Railway has its own reverse proxy/SSL
+    profiles:
+      - local
 
 # Named volumes shared between containers
+# These persist data even when containers are deleted
 volumes:
-  static_volume:      # Shared volume for collectstatic output
+  static_volume:      # Shared volume for collectstatic output (CSS, JS, admin files)
+  media_volume:       # Shared volume for user uploads (images, documents, etc.)
