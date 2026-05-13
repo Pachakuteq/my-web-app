@@ -37,3 +37,6 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
+
+# name of website
+*.png
