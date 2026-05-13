@@ -134,18 +134,12 @@ python manage.py runserver
 
 ## Future Enhancements
 
-- [ ] Implement contact form with email functionality
-- [ ] Add dark/light mode toggle
-- [ ] Integration with GitHub API to show live projects
-- [ ] Implement project filtering
-- [ ] Add background music
+- Implement contact form with email functionality
+- Add dark/light mode toggle
+- Integration with GitHub API to show live projects
+- Implement project filtering
+- Add background music
 
-## Contact
-
-Jose David Regalado Alvarado
-- LinkedIn: [LinkedIn Profile](https://linkedin.com/in/jose-david-regalado)
-- GitHub: [@P4cha-qvtek](https://github.com/P4cha-qvtek)
-- Email: jowav467@hotmail.com
 
 ## Collaboration 
 
