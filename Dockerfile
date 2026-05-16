@@ -13,6 +13,9 @@ RUN pip install -r requirements.txt
 # Set a dummy secret key for build time only (collectstatic needs it)
 ENV SECRET_KEY=dummy-secret-key-for-build
 
+# Run database migrations
+RUN python website/manage.py migrate --noinput
+
 # Collect static files into staticfiles/ folder
 RUN python website/manage.py collectstatic --noinput
 
