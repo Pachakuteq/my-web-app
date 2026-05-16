@@ -14,7 +14,8 @@ services:
     
     # Start command - runs Gunicorn web server instead of Django dev server
     # Binds to 0.0.0.0 (all network interfaces) on Railway's assigned PORT
-    command: gunicorn website.wsgi:application --bind 0.0.0.0:${PORT:-8000}
+    # it runs migrations first
+    command: sh -c "python website/manage.py migrate --noinput && gunicorn website.wsgi:application --bind 0.0.0.0:${PORT:-8000} --chdir /app/website"
     
     # Expose the port so other services can connect
     # Uses Railway's PORT in production, 8000 locally
